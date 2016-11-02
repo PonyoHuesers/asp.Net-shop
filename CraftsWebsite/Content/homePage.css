@@ -1,0 +1,194 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,200,400);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(http://i.imgur.com/HS6oD74.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+  color: #fff;
+}
+
+.wrap {
+  padding-top: 0px;
+  width: 960px;
+  margin: auto;
+}
+
+.nav {
+  background-color: rgba(0, 0, 0, 0.45);
+  padding: 0 30px 20px;
+  border-radius: 4px;
+}
+.nav .logo a {
+  color: #fff;
+  font-family: Josefin Slab, serif;
+  font-size: 1.6em;
+  display: inline;
+  text-decoration: none;
+}
+.nav ul {
+  text-align: right;
+  margin-top: -40px;
+}
+.nav ul > li {
+  display: inline-block;
+}
+.nav ul > li a {
+  padding: 5px 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.4s border ease-in-out;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.nav ul > li a:hover {
+  /*border: 1px solid #fff;*/
+  border: 1px solid #fff;
+}
+
+.content-section {
+  min-height: 400px;
+  background-color: rgba(0, 0, 0, 0.45);
+  transition: all .4s ease-in;
+  margin-top: 30px;
+  padding-top: 25px;
+  border-radius: 4px;
+  text-align: center;
+  overflow: hidden;
+}
+.content-section::after, .content-section::before {
+  /* these are the 2 half blocks which cover the content once the animation is triggered */
+  height: 50vh;
+  width: 100%;
+  position: fixed;
+  left: 0;
+}
+.content-section::before {
+  top: 0;
+  transform: translateY(-100%);
+}
+.content-section::after {
+  bottom: 0;
+  transform: translateY(100%);
+}
+.content-section.loading::after, .content-section.loading::before {
+  transform: translateY(0);
+}
+
+#external-content {
+  display: none;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.65);
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer:hover #sdew_2 p {
+  color: #446e9b;
+}
+
+#footer-tag {
+  color: #fff;
+}
+
+#footer-tag a {
+  color: #fff;
+}
+
+#footer-tag a:hover {
+  color: #446e9b;
+}
+
+#footer .logo {
+  width: 150px;
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-15px, 0);
+  color: #000;
+  font-family: Josefin Slab, serif;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  font-size: 48px;
+}
+
+.logo p {
+  font-family: Josefin Slab, serif;
+}
+
+.logo:hover #sdew_2 p {
+  color: #446e9b;
+}
+
+.element {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.element p {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern";
+}
+
+#sdew_1 {
+  font-size: 48px;
+  color: #fff;
+  top: 1px;
+  left: 54px;
+}
+
+#sdew_2 {
+  font-size: 48px;
+  color: #fff;
+  top: 25px;
+  left: 67px;
+}
+
+#sdew_2 p {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+#sdew_3 {
+  font-size: 48px;
+  color: #fff;
+  top: 1px;
+  left: 93px;
+}
+
+.shake {
+  font-size: 24px;
+  margin: 30px 0 0;
+  padding: 20px;
+  text-transform: uppercase;
+}
+.shake:hover {
+  animation: shake 150ms 2 linear;
+  -moz-animation: shake 150ms 2 linear;
+  -webkit-animation: shake 150ms 2 linear;
+  -o-animation: shake 150ms 2 linear;
+}
+

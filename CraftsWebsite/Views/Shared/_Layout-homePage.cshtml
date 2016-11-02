@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @using Microsoft.AspNet.Identity
+    <div class="wrap">
+        <div class="nav">
+            <div class="logo shake">
+                <a class="homePage" href="front">Simple Shop</a>
+            </div>
+            <ul>
+                <li style="padding-top:34.5px;">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li style="padding-right:52px;">@Html.ActionLink("Shop", "ViewShop", "Home", new { id = 1 }, null)</li>
+                
+            </ul>
+
+            <div style="position:absolute; padding-left: 11px; top: 205px;">
+
+                @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                        @Html.AntiForgeryToken()
+
+                        <ul>
+                            <li>
+                                @Html.ActionLink(User.Identity.GetUserName() + "'s Cart !", "Cart", "Home", routeValues: null, htmlAttributes: new { title = "Cart" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    }
+
+                }
+                else
+                {
+                    <ul>
+
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }
+
+            </div>
+        </div>
+            
+    <div id="external-content">
+        <!-- imagine this being an external .html file  -->
+        <div id="front" class="content">
+            <h3>Home Page</h3>
+            <p>Lets pretend this is a lovely landing page</p>
+        </div>
+
+        <div id="about" class="content">
+            <h3>About this application</h3>
+            <p>
+                This website mimics a shopping cart where a user can add items to their cart, and the user is allowed to perform <br />
+                CRUD operations on their cart items. This project was created in Visual Studio 2015 using C#.
+            </p>
+        </div>
+    </div>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+@RenderBody()
+<body>
+    @RenderSection("scripts", required: false)
+
+
+
+</body>
+</html>

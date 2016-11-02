@@ -1,0 +1,114 @@
+﻿@model CraftsWebsite.ViewModel.ShoppingCartViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout-homePage.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+@helper checkoutButton()
+{
+    <button class="btn btn-primary disabled">Proceed to Checkout &raquo;</button> 
+}
+
+@if (Model.cartEmpty == false)
+{
+<div class="wrap content-section">
+    <table id="customers" class="table" style="text-align-last:center;">
+        <thead>
+            <tr>
+                <th style="padding-left: 28px;">Product</th>
+                <th style="padding-left: 28px;">Quantity</th>
+                <th style="padding-left: 28px;">Total Price</th>
+                <th style="padding-left: 28px;">Remove Item</th>
+            </tr>
+        </thead>
+    </table><hr />
+    <h1>Subtotal </h1>
+    <h3 id="userBalance">$@Model.customer.Balance</h3><br/>
+    @checkoutButton()
+</div>
+}
+
+else
+{
+    <div class="wrap content-section">
+       <br/> <h1>Your cart is empty.</h1>
+    </div>
+
+}
+@Scripts.Render("~/bundles/jquery")       
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#customers").DataTable({
+            "language": {
+                "emptyTable": "<br/> <h2>Your cart is empty.</h2> <br/>"
+            },
+            bFilter: false,
+            bInfo: false,
+            bPaginate:false,
+            ajax: {
+                url: "/api/customers/" + @Model.userId,
+                dataSrc: "",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+            },
+            columns:
+            [
+                {
+                    data: "name",
+                },
+                {
+                    data: "price",
+                    render: function(data, type, customers)
+                    {
+                        return customers.quantity + "  @@  $" + data + "  each";
+                    }
+                },
+                {
+                    data: "price",
+                    render: function (data, type, customers)
+                    {
+                        var balance = data * customers.quantity;
+                        return "$" + parseFloat(balance).toFixed(2);
+                    }
+                },
+                {
+                    data: "productsId",
+                    render: function (data)
+                    {
+                        return "<a onclick='deleteMethod' id=" + data + " class='btn btn-primary js-button' href='javascript:deleteMethod(" + data + ")'>Double Click to Remove</a>";
+                    }
+                }
+            ]
+        });
+    });
+
+    function deleteMethod(productId){
+
+        var table = $("#customers").DataTable();
+        $("#customers").on("click", ".js-button", function(){
+            var button = $(this);
+    
+            $.ajax(
+                   {
+                       url: "/api/customers/" + @Model.userId + "?productId=" + productId,
+                       type: "DELETE",
+                       data: "remainingBalance",
+                       dataType: 'json',
+                       success: function (data) {
+                           table.row(button.parents("tr")).remove().draw();
+                           document.getElementById('userBalance').innerHTML = "$" + data;
+                       }
+                   });
+        })
+    }
+</script>
+        
+
+
+
+
+
+

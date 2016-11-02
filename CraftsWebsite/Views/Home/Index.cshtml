@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNet.Identity
+
+@functions {
+    public string isLogged()
+    {
+        if (Request.IsAuthenticated)
+            return "logged";
+        else
+            return "notLogged";
+    }
+}
+
+<div class="wrap">
+    <div class="nav">
+        <div class="logo shake">
+            <a class="homePage" href="">Simple Shop</a>
+        </div>
+        <ul>
+            <li style="padding-top:34.5px;"><a class="homePage" href=@isLogged()>Home</a></li>
+            <li id="shop">@Html.ActionLink("Shop", "ViewShop", "Home", new { id = 1 }, null)</li>
+            <li><a class="homePage" href="about">About</a></li>
+        </ul>
+
+        <div style="position:absolute; padding-left: 11px; top: 210px;">
+
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <ul>
+                        <li>
+                            @Html.ActionLink(User.Identity.GetUserName() + "'s cart", "Cart", "Home", routeValues: null, htmlAttributes: new { title = "Cart" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                }
+
+            }
+            else
+            {
+                <ul>
+
+                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                </ul>
+            }
+
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="js-content-wrapper"></div>
+    </div>
+
+    <div id="footer">
+        <div class="wrapper">
+            <a href="https://github.com/PonyoHuesers">
+                <div class="logo">
+                    <div class="element logo-text pre-test" id="sdew_1"><p>J</p></div>
+                    <div class="element logo-text pre-test" id="sdew_2"><p>R</p></div>
+                    <div class="element logo-text pre-test" id="sdew_3"><p>L</p></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="external-content">
+    <!-- imagine this being an external .html file  -->
+    <div id="logged" class="content">
+        <h3>Welcome back!</h3><br />
+        <p>Check out the shop to begin shopping.</p>
+        <p style="padding-top:205px; padding-left:555px;">Check out my website for other great works: <a href="http://joshua-portfolio.azurewebsites.net">Portfolio</a></p>
+        <p style="padding-left:550px;"><i style="font-size:x-small;">Note: No purchases can be made. Feel free to test the site's functionality.</i></p>
+ </div>
+
+    <div id="notLogged" class="content">
+        <h3>Welcome to the site!</h3><br />
+        <p>Create an account or log in to start shopping.</p>
+        <p style="padding-top:205px; padding-left:555px;">Check out my website for other great works: <a style="color: white;" href="http://joshua-portfolio.azurewebsites.net">Portfolio</a></p>
+        <p style="padding-left:550px;"><i style="font-size:x-small;">Note: No purchases can be made. Feel free to test the site's functionality.</i></p>
+    </div>
+
+    <div id="about" class="content">
+        <h3><u>About this application</u></h3><br />
+        <p>
+            Designed using: ASP.NET/C# in Visual Studio 2015<br /> <br /><br />
+            This website mimics a shopping site where a user can add items to their cart, and the user is allowed to perform <br /><br />
+            CRUD operations on their cart items. The images in the shop are placeholders for real-life products that would be <br /><br />
+            used in their respective places. <i>Note: No purchases can be made. It is strictly for testing the site's functionality.</i>
+        </p>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var homePage = '@isLogged()';
+        loadSection(homePage);
+
+
+        $('.homePage').click(function (event) {
+            event.preventDefault();
+            var toLoad = this.getAttribute('href');
+
+            loadSection(toLoad);
+        })
+    });
+
+    function loadSection(page) {
+        var $contentHolder = $('.js-content-wrapper');
+
+        $contentHolder.hide().load('#external-content #' + page + ' > *').fadeIn(800);
+    }
+</script>

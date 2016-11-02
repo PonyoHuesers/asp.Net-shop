@@ -1,0 +1,125 @@
+﻿@model CraftsWebsite.ViewModel.ShoppingCartViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout-homePage.cshtml";
+}
+
+@helper checkMark(int number)
+{
+
+    <div id=@number style="display: none; position:absolute; padding-left:55px;" class="checkmark-circle">
+        <div style="position:absolute; padding-left:70px;" class="background"></div>
+        <div style="position:absolute; padding-left:95px;" class="checkmark draw"></div>
+    </div>
+}
+
+@helper idManipulation(int column, int loopCount)
+{
+Model.location = column + 3 * loopCount;
+Model.locationId = Model.location * 10;
+Model.locationName = Model.location - 9;
+}
+
+@helper quantitySelect()
+{
+    <br/>
+    <div class="col-md-3" style="position: absolute; top: 155px; right: 165px;">
+        <select class="form-control" id="select">
+            <option value="0">Quantity</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+
+}
+
+<div class="wrap content-section">
+
+    @if (Model.pageNumber == 1)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+            <div class="row">
+                <div class="col-md-4">
+                    @idManipulation(10, k)
+                    @checkMark(Model.location)
+                    <h3>Arrow @Model.locationName</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(@Model.location)" id=@Model.locationId>Purchase!</a></p>
+
+                </div>
+                <div class="col-md-4">
+                    @idManipulation(11, k)
+                    @checkMark(Model.location)
+                    <h3>Arrow @Model.locationName</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(@Model.location)" id=@Model.locationId>Purchase!</a></p>
+                </div>
+                <div class="col-md-4">
+                    @idManipulation(12, k)
+                    @checkMark(Model.location)
+                    <h3>Arrow @Model.locationName</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(@Model.location)" id=@Model.locationId>Purchase!</a></p>
+                </div>
+            </div> <hr />}
+        <br />
+
+        <ul class="pager">
+            <li class="disabled">@Html.ActionLink("Previous", "ViewShop", "Home", null, null)</li>
+            <li>@Html.ActionLink("Next", "ViewShop", "Home", new { id = 2 }, null)</li>
+        </ul>
+    }
+    else
+    {
+        for (int k = 0; k < 1; k++)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @checkMark(16)
+                    <h3>Arrow 7</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(16)" id=160>Purchase!</a></p>
+                </div>
+                <div class="col-md-4">
+                    @checkMark(17)
+                    <h3>Arrow 8</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(17)" id=170>Purchase!</a></p>
+                </div>
+                <div class="col-md-4">
+                    @checkMark(18)
+                    <h3>Arrow 9</h3>
+                    <p><img width="100" height="100" src="http://i1070.photobucket.com/albums/u499/quakerknight/006816-3d-transparent-glass-icon-arrows-triangle-solid-down_zps5lkvsxmn.png" /></p>
+                    <p><a class="btn btn-primary" onclick="myFunction" href="javascript:myFunction(18)" id=180>Purchase!</a></p>
+                </div>
+            </div> <hr />}
+        <br />
+
+        <ul class="pager">
+            <li>@Html.ActionLink("Previous", "ViewShop", "Home", new { id = 1 }, null)</li>
+            <li class="disabled">@Html.ActionLink("Next", "ViewShop", "Home", null, null)</li>
+        </ul>
+    }
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    function myFunction(productId) {
+        $("#" + productId).show();
+        $("#" + productId * 10).text("Added to cart!");
+        $("#" + productId * 10).attr("class", "btn btn-success");
+        $.ajax(
+            {
+                url: "/api/customers/" + @Model.userId + "?productId=" + productId,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8'
+            }
+        )}  
+</script>
+
