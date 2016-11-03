@@ -23,7 +23,7 @@
 
                         <ul>
                             <li>
-                                @Html.ActionLink(User.Identity.GetUserName() + "'s Cart !", "Cart", "Home", routeValues: null, htmlAttributes: new { title = "Cart" })
+                                @Html.ActionLink(User.Identity.GetUserName() + "'s cart", "Cart", "Home", routeValues: null, htmlAttributes: new { title = "Cart" })
                             </li>
                             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                         </ul>
